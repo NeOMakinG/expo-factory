@@ -16,18 +16,17 @@ i18n.translations = {
 
 i18n.locale = Localization.locale;
 
-export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
+export default function App(): React.ReactElement | null {
+    const isLoadingComplete = useCachedResources();
+    const colorScheme = useColorScheme();
 
-  if (!isLoadingComplete) {
-    return null;
-  } else {
+    if (!isLoadingComplete) {
+        return null;
+    }
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+        <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+        </SafeAreaProvider>
     );
-  }
 }
