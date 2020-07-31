@@ -8,13 +8,17 @@ import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import fr from './translations/fr-FR';
 import en from './translations/en-GB';
+import * as firebase from 'firebase';
+import firebaseConfig from './constants/firebase';
 
 i18n.translations = {
-  'fr-FR': fr,
-  'en-GB': en
+    'fr-FR': fr,
+    'en-GB': en,
 };
 
 i18n.locale = Localization.locale;
+
+firebase.initializeApp(firebaseConfig);
 
 export default function App(): React.ReactElement | null {
     const isLoadingComplete = useCachedResources();
