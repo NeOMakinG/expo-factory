@@ -2,8 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { DrawerActions } from '@react-navigation/native';
 
 import Colors from '../constants/Colors';
+import Global from '../constants/Global';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
@@ -13,63 +16,89 @@ import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
-      <BottomTab.Screen
-        name={i18n.t('list')}
-        component={TabOneNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-list" color={color} />,
-        }}
-      />
+    return (
+        <BottomTab.Navigator initialRouteName="TabOne" tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+            <BottomTab.Screen
+                name={i18n.t('list')}
+                component={TabOneNavigator}
+                options={{
+                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-list" color={color} />,
+                }}
+            />
 
-      <BottomTab.Screen
-        name={i18n.t('articles')}
-        component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="md-images" color={color} />,
-        }}
-      />
-    </BottomTab.Navigator>
-  );
+            <BottomTab.Screen
+                name={i18n.t('articles')}
+                component={TabTwoNavigator}
+                options={{
+                    tabBarIcon: ({ color }) => <TabBarIcon name="md-images" color={color} />,
+                }}
+            />
+        </BottomTab.Navigator>
+    );
 }
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+    return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
-      />
-    </TabOneStack.Navigator>
-  );
+function TabOneNavigator({ navigation }: any) {
+    const colorScheme = useColorScheme();
+
+    return (
+        <TabOneStack.Navigator>
+            <TabOneStack.Screen
+                name="TabOneScreen"
+                component={TabOneScreen}
+                options={{
+                    headerTitle: 'Tab One Title',
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            style={Global.burger}
+                            onPress={() => {
+                                navigation.dispatch(DrawerActions.openDrawer());
+                            }}
+                        >
+                            <Ionicons size={30} color={Colors[colorScheme].text} name="ios-menu" />
+                        </TouchableOpacity>
+                    ),
+                }}
+            />
+        </TabOneStack.Navigator>
+    );
 }
 
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  );
+function TabTwoNavigator({ navigation }: any) {
+    const colorScheme = useColorScheme();
+
+    return (
+        <TabTwoStack.Navigator>
+            <TabTwoStack.Screen
+                name="TabTwoScreen"
+                component={TabTwoScreen}
+                options={{
+                    headerTitle: 'Tab Two Title',
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            style={Global.burger}
+                            onPress={() => {
+                                navigation.dispatch(DrawerActions.openDrawer());
+                            }}
+                        >
+                            <Ionicons size={30} color={Colors[colorScheme].text} name="ios-menu" />
+                        </TouchableOpacity>
+                    ),
+                }}
+            />
+        </TabTwoStack.Navigator>
+    );
 }

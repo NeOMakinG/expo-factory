@@ -13,7 +13,8 @@ web-build/
 *.swp
 *.swo
 
-firebase.ts
+constants/firebase.ts
+constants/local-firebase.ts
 
 # macOS
 .DS_Store
