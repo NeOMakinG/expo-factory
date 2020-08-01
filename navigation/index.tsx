@@ -8,6 +8,9 @@ import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import Loading from '../screens/Loading';
+import Login from '../screens/Login';
+import { TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
@@ -26,8 +29,25 @@ function RootNavigator() {
 
 function DrawerStack() {
     return (
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator initialRouteName="Home" backBehavior="history">
             <Drawer.Screen name="Home" component={RootNavigator} />
+            <Drawer.Screen
+                name="Login"
+                component={Login}
+                options={{
+                    headerTitle: 'Tab One Title',
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            style={Global.burger}
+                            onPress={() => {
+                                navigation.dispatch(DrawerActions.openDrawer());
+                            }}
+                        >
+                            <Ionicons size={30} color={Colors[colorScheme].text} name="ios-menu" />
+                        </TouchableOpacity>
+                    ),
+                }}
+            />
         </Drawer.Navigator>
     );
 }
