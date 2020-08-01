@@ -2,8 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { TouchableOpacity } from 'react-native';
+import { DrawerActions } from '@react-navigation/native';
 
 import Colors from '../constants/Colors';
+import Global from '../constants/Global';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
@@ -46,13 +49,27 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+function TabOneNavigator({ navigation }: any) {
+    const colorScheme = useColorScheme();
+
     return (
         <TabOneStack.Navigator>
             <TabOneStack.Screen
                 name="TabOneScreen"
                 component={TabOneScreen}
-                options={{ headerTitle: 'Tab One Title' }}
+                options={{
+                    headerTitle: 'Tab One Title',
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            style={Global.burger}
+                            onPress={() => {
+                                navigation.dispatch(DrawerActions.openDrawer());
+                            }}
+                        >
+                            <Ionicons size={30} color={Colors[colorScheme].text} name="ios-menu" />
+                        </TouchableOpacity>
+                    ),
+                }}
             />
         </TabOneStack.Navigator>
     );
@@ -60,13 +77,27 @@ function TabOneNavigator() {
 
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
-function TabTwoNavigator() {
+function TabTwoNavigator({ navigation }: any) {
+    const colorScheme = useColorScheme();
+
     return (
         <TabTwoStack.Navigator>
             <TabTwoStack.Screen
                 name="TabTwoScreen"
                 component={TabTwoScreen}
-                options={{ headerTitle: 'Tab Two Title' }}
+                options={{
+                    headerTitle: 'Tab Two Title',
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            style={Global.burger}
+                            onPress={() => {
+                                navigation.dispatch(DrawerActions.openDrawer());
+                            }}
+                        >
+                            <Ionicons size={30} color={Colors[colorScheme].text} name="ios-menu" />
+                        </TouchableOpacity>
+                    ),
+                }}
             />
         </TabTwoStack.Navigator>
     );

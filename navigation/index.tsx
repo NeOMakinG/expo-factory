@@ -26,8 +26,8 @@ function RootNavigator() {
 
 function DrawerStack() {
     return (
-        <Drawer.Navigator initialRouteName="Loading">
-            <Drawer.Screen name="Loading" component={RootNavigator} />
+        <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Home" component={RootNavigator} />
         </Drawer.Navigator>
     );
 }
