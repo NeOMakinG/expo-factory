@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Loading({ navigation }): React.ReactElement {
-    useEffect(() => {
-        navigation.navigate('Root');
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            navigation.navigate('Root');
+        }, []),
+    );
 
     return (
         <View style={styles.container}>
